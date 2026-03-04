@@ -18,7 +18,7 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // View engines
-app.engine('hbs', exphbs.engine({ extname: '.hbs', defaultLayout: false }));
+app.engine('hbs', exphbs.engine({ extname: '.hbs', defaultLayout: false, layoutsDir: path.join(__dirname, 'views/layouts') }));
 app.engine('ejs', require('ejs').__express);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -32,7 +32,7 @@ app.use('/questions', require('./routes/questionRoutes'));
 
 // Home
 app.get('/', (req, res) => {
-  res.render('layouts/main.hbs');
+  res.render('home', { layout: 'main' });
 });
 
 // HTTPS server
