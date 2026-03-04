@@ -1,0 +1,25 @@
+
+
+<head>
+  <title>Questions List</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="card p-4">
+      <span class="fs-4 fw-bold mb-3">List of Questions</span>
+      <a href="/questions/new" class="btn btn-primary mb-3">Create New Question</a>
+      <ul class="list-group">
+        <% questions.forEach(function(question) { %>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="/questions/<%= question._id %>" class="text-decoration-none"><%= question.text %></a>
+            <form action="/questions/<%= question._id %>?_method=DELETE" method="POST" class="d-inline">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</body>
+

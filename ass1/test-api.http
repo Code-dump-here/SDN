@@ -1,0 +1,144 @@
+### Simple Quiz API Test Requests
+### Use with REST Client extension in VS Code or copy to Postman/Thunder Client
+
+@baseUrl = http://localhost:3000
+
+### 1. Get API Documentation
+GET {{baseUrl}}
+
+### 2. Create a Quiz
+POST {{baseUrl}}/quizzes
+Content-Type: application/json
+
+{
+  "title": "Geography Quiz",
+  "description": "Test your knowledge of world geography and capitals"
+}
+
+### 3. Create Questions (individually)
+POST {{baseUrl}}/questions
+Content-Type: application/json
+
+{
+  "text": "What is the capital of France?",
+  "options": ["London", "Paris", "Berlin", "Madrid"],
+  "keywords": ["capital", "france", "europe"],
+  "correctAnswerIndex": 1
+}
+
+###
+POST {{baseUrl}}/questions
+Content-Type: application/json
+
+{
+  "text": "What is the capital of Japan?",
+  "options": ["Seoul", "Beijing", "Tokyo", "Bangkok"],
+  "keywords": ["capital", "japan", "asia"],
+  "correctAnswerIndex": 2
+}
+
+###
+POST {{baseUrl}}/questions
+Content-Type: application/json
+
+{
+  "text": "What is the capital of Italy?",
+  "options": ["Rome", "Milan", "Venice", "Florence"],
+  "keywords": ["capital", "italy", "europe"],
+  "correctAnswerIndex": 0
+}
+
+###
+POST {{baseUrl}}/questions
+Content-Type: application/json
+
+{
+  "text": "Which is the largest ocean?",
+  "options": ["Atlantic", "Indian", "Arctic", "Pacific"],
+  "keywords": ["ocean", "geography"],
+  "correctAnswerIndex": 3
+}
+
+### 4. Get all Questions
+GET {{baseUrl}}/questions
+
+### 5. Get all Quizzes (with populated questions)
+GET {{baseUrl}}/quizzes
+
+### 6. Get single Quiz by ID
+# Replace {quizId} with actual ID from previous response
+GET {{baseUrl}}/quizzes/{quizId}
+
+### 7. Add single question to a quiz
+# Replace {quizId} with actual quiz ID
+POST {{baseUrl}}/quizzes/{quizId}/question
+Content-Type: application/json
+
+{
+  "text": "What is the capital of Germany?",
+  "options": ["Munich", "Hamburg", "Berlin", "Frankfurt"],
+  "keywords": ["capital", "germany", "europe"],
+  "correctAnswerIndex": 2
+}
+
+### 8. Add multiple questions to a quiz
+# Replace {quizId} with actual quiz ID
+POST {{baseUrl}}/quizzes/{quizId}/questions
+Content-Type: application/json
+
+{
+  "questions": [
+    {
+      "text": "What is the capital of Spain?",
+      "options": ["Barcelona", "Madrid", "Seville", "Valencia"],
+      "keywords": ["capital", "spain", "europe"],
+      "correctAnswerIndex": 1
+    },
+    {
+      "text": "What is the capital of Canada?",
+      "options": ["Toronto", "Vancouver", "Ottawa", "Montreal"],
+      "keywords": ["capital", "canada", "north america"],
+      "correctAnswerIndex": 2
+    },
+    {
+      "text": "What is the capital of Australia?",
+      "options": ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+      "keywords": ["capital", "australia", "oceania"],
+      "correctAnswerIndex": 2
+    }
+  ]
+}
+
+### 9. Get quiz with questions that have "capital" keyword
+# Replace {quizId} with actual quiz ID
+GET {{baseUrl}}/quizzes/{quizId}/populate
+
+### 10. Update a Quiz
+# Replace {quizId} with actual quiz ID
+PUT {{baseUrl}}/quizzes/{quizId}
+Content-Type: application/json
+
+{
+  "title": "World Geography Quiz - Updated",
+  "description": "Updated description for geography quiz"
+}
+
+### 11. Update a Question
+# Replace {questionId} with actual question ID
+PUT {{baseUrl}}/questions/{questionId}
+Content-Type: application/json
+
+{
+  "text": "What is the capital of France? (Updated)",
+  "options": ["London", "Paris", "Berlin", "Madrid"],
+  "keywords": ["capital", "france", "europe", "updated"],
+  "correctAnswerIndex": 1
+}
+
+### 12. Delete a Question
+# Replace {questionId} with actual question ID
+DELETE {{baseUrl}}/questions/{questionId}
+
+### 13. Delete a Quiz
+# Replace {quizId} with actual quiz ID
+DELETE {{baseUrl}}/quizzes/{quizId}

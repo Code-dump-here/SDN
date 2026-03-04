@@ -1,0 +1,108 @@
+# Postman-importable cURL commands for Simple Quiz API
+# Base URL: http://{{baseURL}}
+
+# 1) API home / documentation
+curl http://{{baseURL}}/
+
+# 2) Get all quizzes (populated questions)
+curl http://{{baseURL}}/quizzes
+
+# 3) Get single quiz by ID
+# Replace {quizId} with actual ID
+curl http://{{baseURL}}/quizzes/{quizId}
+
+# 4) Create a new quiz
+## Example JSON:
+# {
+#   "title": "Geography Quiz",
+#   "description": "Test your knowledge of world geography"
+# }
+curl -X POST http://{{baseURL}}/quizzes -H "Content-Type: application/json" -d '{"title":"Geography Quiz","description":"Test your knowledge of world geography"}'
+
+# 5) Update a quiz
+# Replace {quizId}
+## Example JSON:
+# {
+#   "title": "Updated Title",
+#   "description": "Updated description"
+# }
+curl -X PUT http://{{baseURL}}/quizzes/{quizId} -H "Content-Type: application/json" -d '{"title":"Updated Title","description":"Updated description"}'
+
+# 6) Delete a quiz
+# Replace {quizId}
+curl -X DELETE http://{{baseURL}}/quizzes/{quizId}
+
+# 7) Get quiz with questions that have the "capital" keyword
+# Replace {quizId}
+curl http://{{baseURL}}/quizzes/{quizId}/populate
+
+# 8) Add single question to a quiz (creates question and adds to quiz)
+# Replace {quizId}
+## Example JSON:
+# {
+#   "text": "What is the capital of France?",
+#   "options": ["London", "Paris", "Berlin", "Madrid"],
+#   "keywords": ["capital", "france"],
+#   "correctAnswerIndex": 1
+# }
+curl -X POST http://{{baseURL}}/quizzes/{quizId}/question -H "Content-Type: application/json" -d '{"text":"What is the capital of France?","options":["London","Paris","Berlin","Madrid"],"keywords":["capital","france"],"correctAnswerIndex":1}'
+
+# 9) Add multiple questions to a quiz
+# Replace {quizId}
+## Example JSON:
+# {
+#   "questions": [
+#     {
+#       "text": "What is the capital of Spain?",
+#       "options": ["Barcelona", "Madrid", "Seville", "Valencia"],
+#       "keywords": ["capital", "spain"],
+#       "correctAnswerIndex": 1
+#     },
+#     {
+#       "text": "What is the capital of Germany?",
+#       "options": ["Munich", "Hamburg", "Berlin", "Frankfurt"],
+#       "keywords": ["capital", "germany"],
+#       "correctAnswerIndex": 2
+#     }
+#   ]
+# }
+curl -X POST http://{{baseURL}}/quizzes/{quizId}/questions -H "Content-Type: application/json" -d '{"questions":[{"text":"What is the capital of Spain?","options":["Barcelona","Madrid","Seville","Valencia"],"keywords":["capital","spain"],"correctAnswerIndex":1},{"text":"What is the capital of Germany?","options":["Munich","Hamburg","Berlin","Frankfurt"],"keywords":["capital","germany"],"correctAnswerIndex":2}]}'
+
+# ---------------- Questions endpoints ----------------
+
+# 10) Get all questions
+curl http://{{baseURL}}/questions
+
+# 11) Get single question by ID
+# Replace {questionId}
+curl http://{{baseURL}}/questions/{questionId}
+
+# 12) Create a question
+## Example JSON:
+# {
+#   "text": "What is the capital of Italy?",
+#   "options": ["Rome", "Milan", "Venice", "Florence"],
+#   "keywords": ["capital", "italy"],
+#   "correctAnswerIndex": 0
+# }
+curl -X POST http://{{baseURL}}/questions -H "Content-Type: application/json" -d '{"text":"What is the capital of Italy?","options":["Rome","Milan","Venice","Florence"],"keywords":["capital","italy"],"correctAnswerIndex":0}'
+
+# 13) Update a question
+# Replace {questionId}
+## Example JSON:
+# {
+#   "text": "Updated question text",
+#   "options": ["A", "B", "C"],
+#   "keywords": ["updated"],
+#   "correctAnswerIndex": 0
+# }
+curl -X PUT http://{{baseURL}}/questions/{questionId} -H "Content-Type: application/json" -d '{"text":"Updated question text","options":["A","B","C"],"keywords":["updated"],"correctAnswerIndex":0}'
+
+# 14) Delete a question
+# Replace {questionId}
+curl -X DELETE http://{{baseURL}}/questions/{questionId}
+
+# Notes:
+# - To import into Postman: File > Import > Raw text (paste one cURL command) or Import the file and Postman will detect cURL requests.
+# - Replace placeholders {quizId} and {questionId} with actual IDs returned by the API.
+# - All requests target http://{{baseURL}} (your running Express server).

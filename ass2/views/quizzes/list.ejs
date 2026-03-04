@@ -1,0 +1,27 @@
+
+
+<head>
+  <title>Quizzes List</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <span class="fs-4 fw-bold mb-4">List of Quizzes</span>
+    <a href="/quizzes/new" class="btn btn-primary mb-4">Create New Quiz</a>
+    <ul class="list-group list-group-open">
+      <% quizzes.forEach(function(quiz) { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-open">
+          <div>
+            <span class="fw-bold"><%= quiz.title %></span><br>
+            <small class="text-muted"><%= quiz.description %></small>
+          </div>
+          <form action="/quizzes/<%= quiz._id %>?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</body>
+

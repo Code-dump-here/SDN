@@ -1,0 +1,105 @@
+Assignment 2 - Question Bank Management Application
+
+Instructions
+In this exercise, you will expand and enhance the project from Assignment 01 to build a question bank management application with a user interface using EJS and Handlebars. The exercise will focus on integrating existing APIs from Assignment 01 into the new interface, ensuring CRUD functionality for questions and quizzes.
+Template engine is a part of Express that enables us to use static files in our applications. Template engine converts variables to values and changes the template to HTML files to send to the client. The default template engine of Express is Jade, but EJS is the most commonly used engine
+In this article we will cover:
+-Setting up a project
+-Configuring app.js to use EJS
+-Creating EJS partials
+-Using partials in views
+-Passing data to EJS files (views and partials)
+Request
+User interface (UI)
+-Use EJS and Handlebars to create user interfaces.
+-Use Bootstrap or CSS to create beautiful and user-friendly interfaces.
+Main function
+-Quiz Management:
+oDisplays a list of quizzes.
+oAdd, edit, delete quiz.
+oView quiz details including related questions.
+-Management Questions:
+oShow list of questions.
+oAdd, edit, delete questions.
+oAdd questions to a specific quiz. 
+API integration
+-Use the APIs created in Assignment 01 to manipulate the MongoDB database.
+-Use API endpoints like GET, POST, PUT, DELETE for quizzes and questions.
+Assignment Requirements
+Step 1: Prepare the Environment
+-Initialize project: Create a new directory for the project and initialize npm:
+-Install necessary modules: Install Express, EJS, Handlebars, Body-Parser, Method-Override, Axios
+-Install Bootstrap 5: CDN can be used to integrate Bootstrap 5 into the project.
+Step 2: Project Structure
+Create necessary folders and files:
+
+Step 3: Set up Express and Handlebars
+Configuring Express and Handlebars:
+-Set up Handlebars as the main view engine and EJS for specific pages.
+-Set up necessary middleware such as Body-Parser, Method-Override and Static.
+Step 4: Build API
+-Create routes for quiz:
+oCreate routes to handle CRUD for quiz.
+oUse Axios to call APIs from Assignment 01.
+-Create routes for questions:
+oCreate routes to handle CRUD for queries.
+oUse Axios to call APIs from Assignment 01.
+Step 5: Create User Interface
+-Design the main interface with Bootstrap:
+oUse Bootstrap 5 to create user-friendly interfaces.
+oDesign interface elements such as header, footer, and quiz and question management pages.
+-Create EJS pages for quiz:
+oCreate EJS pages to display quiz list, quiz details, create and edit quiz.
+oUse Bootstrap's CSS classes to create beautiful forms and lists.
+-Creating EJS pages for the question:
+oCreate EJS pages to display question list, question details, create new and edit questions.
+oUse Bootstrap's CSS classes to create beautiful forms and lists.
+Step 6: Test the Application
+Run the application
+With /questions
+-List of Question
+
+-Create a Question
+
+-Display Question
+
+-Edit a Question
+
+With /quizzes
+-List of Quiz 
+
+-Display Quiz 
+
+-Create a Quiz
+
+-Edit a Quiz
+
+-Check the routes in the browser:
+oVisit routes like /quizzes and /questions to test CRUD functions.
+oEnsure that the APIs function properly and the user interface displays correctly.
+Conclude
+This exercise helps you get familiar with using EJS and Bootstrap 5 to create a user interface for a question bank management application, integrating with APIs built in Assignment 01.
+Note that the API is used with HTTPS
+Using HTTPS for secure csommunication between web applications and APIs is important. In the context of Assignment 01, when you want to use HTTPS for API requests, you need to understand how to configure and use HTTPS in Express and Axios.
+Example:
+// routes/question.js
+const https = require('https');
+const express = require('express');
+const router = express.Router();
+const axios = require('axios');
+// URL của API
+const apiUrl = 'https://localhost:3443';
+
+const axiosInstance = axios.create({
+    httpsAgent: new https.Agent({ rejectUnauthorized: false })
+  });
+// GET all questions
+router.get('/', async (req, res) => {
+  try {
+    const response = await axiosInstance.get(`${apiUrl}/questions`);
+    res.render('question/list', { questions: response.data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});

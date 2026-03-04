@@ -1,0 +1,25 @@
+
+
+<head>
+  <title>Quiz Detail</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="card p-4">
+      <span class="fs-4 fw-bold mb-3"><%= quiz.title %></span>
+      <div class="mb-3"><strong>Description:</strong> <%= quiz.description %></div>
+      <h4 class="mt-4">Questions</h4>
+      <ul class="list-group mb-3">
+        <% questions.forEach(function(question) { %>
+          <li class="list-group-item"><%= question.text %></li>
+        <% }) %>
+      </ul>
+      <div class="d-flex">
+        <a href="/quizzes/<%= quiz._id %>/question" class="btn btn-success me-2">Add Question</a>
+        <a href="/quizzes" class="btn btn-secondary">Back to Quizzes</a>
+      </div>
+    </div>
+  </div>
+</body>
+
