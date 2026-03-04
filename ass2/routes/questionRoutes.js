@@ -1,38 +1,99 @@
 const express = require('express');
 const router = express.Router();
-const questionController = require('../controllers/questionController');
+const https = require('https');
+const axios = require('axios');
 
+const axiosInstance = axios.create({
+  httpsAgent: new https.Agent({ rejectUnauthorized: false })
+});
 
-// API routes for questions
-router.get('/api/questions', require('../controllers/questionController').apiGetAllQuestions);
-router.get('/api/questions/:id', require('../controllers/questionController').apiGetQuestionById);
-router.post('/api/questions', require('../controllers/questionController').apiCreateQuestion);
-router.put('/api/questions/:id', require('../controllers/questionController').apiUpdateQuestion);
-router.delete('/api/questions/:id', require('../controllers/questionController').apiDeleteQuestion);
-// API route for creating a question
-router.post('/api/questions', require('../controllers/questionController').apiCreateQuestion);
+const apiUrl = process.env.API_URL || 'https://localhost:3443';
 
-// List questions
-router.get('/', questionController.getAllQuestions);
+// GET /questions
+router.get('/', async (req, res) => {
+  try {
+    const response = await axiosInstance.get(`${apiUrl}/api/questions`);
+    res.render('questions/list.ejs', { questions: response.data.questions });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
-// New question form
+// GET /questions/new
 router.get('/new', (req, res) => {
   res.render('questions/new.ejs');
 });
 
-// Create question
-router.post('/', questionController.createQuestion);
+// POST /questions
+router.post('/', async (req, res) => {
+  try {
+    const options = req.body.options
+      ? req.body.options.split(',').map(s => s.trim()).filter(Boolean)
+      : [];
+    const correctAnswerIndex = parseInt(req.body.correctAnswerIndex);
+    await axiosInstance.post(`${apiUrl}/api/questions`, {
+      text: req.body.text,
+      options,
+      correctAnswerIndex
+    });
+    res.redirect('/questions');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error creating question: ' + (err.response?.data?.error || err.message));
+  }
+});
 
-// Edit question form
-router.get('/:id/edit', questionController.editQuestionForm);
+// GET /questions/:id/edit
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const response = await axiosInstance.get(`${apiUrl}/api/questions/${req.params.id}`);
+    res.render('questions/edit.ejs', { question: response.data.question });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
-// Update question
-router.put('/:id', questionController.updateQuestion);
+// PUT /questions/:id
+router.put('/:id', async (req, res) => {
+  try {
+    const options = req.body.options
+      ? req.body.options.split(',').map(s => s.trim()).filter(Boolean)
+      : [];
+    const correctAnswerIndex = parseInt(req.body.correctAnswerIndex);
+    await axiosInstance.put(`${apiUrl}/api/questions/${req.params.id}`, {
+      text: req.body.text,
+      options,
+      correctAnswerIndex
+    });
+    res.redirect('/questions');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error updating question: ' + (err.response?.data?.error || err.message));
+  }
+});
 
-// Delete question
-router.delete('/:id', questionController.deleteQuestion);
+// DELETE /questions/:id
+router.delete('/:id', async (req, res) => {
+  try {
+    await axiosInstance.delete(`${apiUrl}/api/questions/${req.params.id}`);
+    res.redirect('/questions');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error deleting question');
+  }
+});
 
-// Question details
-router.get('/:id', questionController.getQuestionById);
+// GET /questions/:id
+router.get('/:id', async (req, res) => {
+  try {
+    const response = await axiosInstance.get(`${apiUrl}/api/questions/${req.params.id}`);
+    res.render('questions/detail.ejs', { question: response.data.question });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
 
 module.exports = router;

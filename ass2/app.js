@@ -1,15 +1,14 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const path = require('path');
 const exphbs = require('express-handlebars');
+const connectDB = require('./config/database');
 
 const app = express();
-
-// MongoDB connection
-const connectDB = require('./config/database');
 connectDB();
 
 // Middleware
@@ -19,26 +18,30 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // View engines
-
-// Register Handlebars engine for .hbs files
 app.engine('hbs', exphbs.engine({ extname: '.hbs', defaultLayout: false }));
-// Register EJS engine for .ejs files
 app.engine('ejs', require('ejs').__express);
 app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
 
-// Routes
+// API routes
+app.use('/api', require('./routes/apiRoutes'));
 
-// EJS routes
+// UI routes
 app.use('/quizzes', require('./routes/quizRoutes'));
 app.use('/questions', require('./routes/questionRoutes'));
 
-
-// Home route uses Handlebars
+// Home
 app.get('/', (req, res) => {
   res.render('layouts/main.hbs');
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+// HTTPS server
+const PORT = process.env.PORT || 3443;
+const sslOptions = {
+  key: fs.readFileSync(path.join(__dirname, 'certs/server.key')),
+  cert: fs.readFileSync(path.join(__dirname, 'certs/server.cert'))
+};
+
+https.createServer(sslOptions, app).listen(PORT, () => {
+  console.log(`HTTPS Server running on https://localhost:${PORT}`);
 });
