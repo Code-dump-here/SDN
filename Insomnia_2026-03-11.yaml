@@ -1,0 +1,441 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: ass1
+meta:
+  id: wrk_5a26daa99a4944b1a0866302de1c32a6
+  created: 1769219674294
+  modified: 1769219674294
+  description: ""
+collection:
+  - name: ass1
+    meta:
+      id: fld_12f07961336040a3a1ac4052db6e27a5
+      created: 1769219674296
+      modified: 1770166907461
+      sortKey: -1769219672611
+      description: ""
+    children:
+      - url: "{{baseURL}}/register"
+        name: register
+        meta:
+          id: req_a1b2c3d4e5f64788a0bcdef1234567801
+          created: 1770200000000
+          modified: 1770200000000
+          isPrivate: false
+          description: "Register a new user. Set admin: true for admin user."
+          sortKey: -1769219672612
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "username": "john",
+              "password": "password123",
+              "admin": false
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/login"
+        name: login
+        meta:
+          id: req_b2c3d4e5f6a748990bcdef1234567802
+          created: 1770200000001
+          modified: 1770200000001
+          isPrivate: false
+          description: "Login and copy the returned token into the 'token' environment variable."
+          sortKey: -1769219672611
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "username": "john",
+              "password": "password123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/quizzes"
+        name: get_quiz
+        meta:
+          id: req_a63c00a6a6fe461fa621345d7b1ba8e9
+          created: 1769219674302
+          modified: 1769559625116
+          isPrivate: false
+          description: ""
+          sortKey: -1769219672610
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/quizzes/6970230babdb1ab0af371a5e"
+        name: get_quiz(id)
+        meta:
+          id: req_718209338ae14be2b9d7dd82d15adace
+          created: 1769219674304
+          modified: 1769563596518
+          isPrivate: false
+          description: ""
+          sortKey: -1769219672608.5
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/quizzes/6970230babdb1ab0af371a5e/populate"
+        name: quiz_with_cap
+        meta:
+          id: req_4145bf92ff1a46688b5c8628bae96741
+          created: 1769219674308
+          modified: 1769220036460
+          isPrivate: false
+          description: ""
+          sortKey: -1769219672608
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/quizzes"
+        name: add_quiz
+        meta:
+          id: req_747363e772c94f80ab0a02eba2a51b3b
+          created: 1769219674310
+          modified: 1769563609828
+          isPrivate: false
+          description: "Admin only"
+          sortKey: -1769219672607
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "title" : "Quiz",
+                "description" : "This?"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/quizzes/697965db8136f7863a821fef"
+        name: update_quiz
+        meta:
+          id: req_e50e0705c8f04c63a5dd3b23e6255391
+          created: 1769219674313
+          modified: 1769563652894
+          isPrivate: false
+          description: "Admin only"
+          sortKey: -1769219672606
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |2-
+             {
+               "title": " Title",
+               "description": " description"
+             }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/quizzes/697965db8136f7863a821fef"
+        name: del_quiz
+        meta:
+          id: req_a0f22653ec104cf8aa16e932f71a749c
+          created: 1769219674315
+          modified: 1769563682973
+          isPrivate: false
+          description: "Admin only"
+          sortKey: -1769219672605
+        method: DELETE
+        headers:
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/quizzes/697965db8136f7863a821fef/questions"
+        name: add_ques_in_quiz(many)
+        meta:
+          id: req_cc12c6cf6e9749f1ba3248d8902048fb
+          created: 1769219674317
+          modified: 1769563675825
+          isPrivate: false
+          description: "Admin only. Can add multi or single"
+          sortKey: -1769219672604
+        method: POST
+        body:
+          mimeType: application/json
+          text: |2-
+             {
+               "questions": [
+                 {
+                   "text": "What is the capital of Spain?",
+                   "options": ["Barcelona", "Madrid", "Seville", "Valencia"],
+                   "keywords": ["capital", "spain"],
+                   "correctAnswerIndex": 1
+                 },
+                 {
+                   "text": "What is the capital of Germany?",
+                   "options": ["Munich", "Hamburg", "Berlin", "Frankfurt"],
+                   "keywords": ["capital", "germany"],
+                   "correctAnswerIndex": 2
+                 }
+               ]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/quizzes/697965db8136f7863a821fef/question"
+        name: add_ques_in_quiz(single)
+        meta:
+          id: req_0bcd98926ebe4a518dfa808512cb6c2a
+          created: 1769219674319
+          modified: 1769563666448
+          isPrivate: false
+          description: "Admin only. Can add multi or single"
+          sortKey: -1769219672603
+        method: POST
+        body:
+          mimeType: application/json
+          text: |2
+
+                 {
+                   "text": "What is the capital of Spain?",
+                   "options": ["Barcelona", "Madrid", "Seville", "Valencia"],
+                   "keywords": ["capital", "spain"],
+                   "correctAnswerIndex": 1
+                 }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/questions"
+        name: get_ques
+        meta:
+          id: req_ff466d385a994274842934a8d40277e7
+          created: 1769219674321
+          modified: 1769220168186
+          isPrivate: false
+          description: ""
+          sortKey: -1769219672602
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/questions/6970230cabdb1ab0af371a64"
+        name: get_ques(id)
+        meta:
+          id: req_b4cfa2aaf06544bdb5d2b88511be5ed1
+          created: 1769219674323
+          modified: 1769220188359
+          isPrivate: false
+          description: ""
+          sortKey: -1769219672601
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/questions"
+        name: add_ques(not in quiz)
+        meta:
+          id: req_9b3df1f339f54e5a85df11952735dd81
+          created: 1769219674324
+          modified: 1769220247355
+          isPrivate: false
+          description: "Verified user only. Author is set automatically from token."
+          sortKey: -1769219672600
+        method: POST
+        body:
+          mimeType: application/json
+          text: |2-
+             {
+               "text": "What is the capital of this?",
+               "options": ["Rome", "Milan", "this", "Florence"],
+               "keywords": ["capital", "italy"],
+               "correctAnswerIndex": 0
+             }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/questions/6970230babdb1ab0af371a60"
+        name: update_ques
+        meta:
+          id: req_d86b388b34924ed392de84cc3ee67f11
+          created: 1769219674325
+          modified: 1769560142481
+          isPrivate: false
+          description: "Author of the question only."
+          sortKey: -1769219672599
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |2-
+             {
+               "text": "Updated question text",
+               "options": ["A", "B", "C","D"],
+               "keywords": ["updated"]
+             }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/questions/6970230babdb1ab0af371a62"
+        name: del_ques
+        meta:
+          id: req_b6cdce30c7424914a6a06b23c461ab28
+          created: 1769219674326
+          modified: 1769560165207
+          isPrivate: false
+          description: "Author of the question only."
+          sortKey: -1769219672598
+        method: DELETE
+        headers:
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{baseURL}}/users"
+        name: get_users
+        meta:
+          id: req_c3d4e5f6a7b849a01cdef1234567803
+          created: 1770200000002
+          modified: 1770200000002
+          isPrivate: false
+          description: "Admin only. Returns all registered users."
+          sortKey: -1769219672597
+        method: GET
+        headers:
+          - name: Authorization
+            value: "Bearer {{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_dab9007a36ac9dc3d339f501c8bd5b346b7b864d
+    created: 1769219674333
+    modified: 1769219674333
+environments:
+  name: Variables
+  meta:
+    id: env_7a0b79bce8a449988188985e7181dfac
+    created: 1769219674328
+    modified: 1769219771903
+    isPrivate: false
+  data:
+    baseURL: http://localhost:3000
+    token: ""
